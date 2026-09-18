@@ -60,6 +60,18 @@
             background-color: rgba(255, 170, 0, 0.1);
         }
 
+        /* 3. 螢幕閱讀器專用隱藏類別 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
         /* 結構樣式 */
         header {
             background-color: var(--primary-color);
@@ -146,6 +158,14 @@
             margin-bottom: 0.5rem;
         }
 
+        .info-box {
+            background-color: #f0f7ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
         .achievement-list {
             list-style-position: inside;
             margin-bottom: 1rem;
@@ -175,6 +195,43 @@
             font-size: 0.85rem;
             font-weight: bold;
             margin-right: 8px;
+        }
+
+        /* 影片容器 (響應式 16:9) */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 1.5rem 0 0.5rem 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background-color: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* 外部連結樣式 */
+        .external-link {
+            color: var(--secondary-color);
+            font-weight: bold;
+            text-decoration: underline;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .external-link:hover {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            text-decoration: none;
         }
 
         /* 可折疊面板設計 (HTML5 details/summary) */
@@ -284,6 +341,7 @@
     <nav role="navigation" aria-label="主要導覽">
         <ul>
             <li><a href="#intro">團隊介紹</a></li>
+            <li><a href="#schedule">近期賽程預告</a></li>
             <li><a href="#powertech">PowerTech 科技創作</a></li>
             <li><a href="#mechanism">機關王與 STEAM</a></li>
             <li><a href="#ai-coding">AI 與程式機器人</a></li>
@@ -303,11 +361,41 @@
             <p>以下為您整理了團隊歷年來在各項重大賽事的閃耀時刻，讓我們一起為孩子的努力喝采！</p>
         </section>
 
+        <!-- 近期賽程預告 -->
+        <section id="schedule" aria-labelledby="schedule-title">
+            <h2 id="schedule-title">📅 近期賽程預告</h2>
+            <p>信義好玩團隊持續挑戰各項頂尖賽事，以下是我們近期的參賽行事曆，邀請大家一起為選手們加油！</p>
+            
+            <ul class="achievement-list" style="margin-top: 1rem;">
+                <li><strong>10月28日：</strong>北北基能源小鐵人競賽</li>
+                <li><strong>11月7日：</strong>PowerTech 青少年科技創作競賽 (新北市賽)</li>
+                <li><strong>11月21日：</strong>Matrix 機器人錦和區賽</li>
+                <li><strong>12月12日：</strong>PowerTech 青少年科技創作競賽 (全國賽)</li>
+                <li><strong>116年3月27日：</strong>新北市機關王比賽</li>
+                <li><strong>116年7月第一週：</strong>科教館 AI START 智慧小車比賽</li>
+                <li><strong>116年8月19日：</strong>世界機關王大賽</li>
+            </ul>
+        </section>
+
         <!-- PowerTech 青少年科技創作競賽 -->
         <section id="powertech" aria-labelledby="powertech-title">
             <h2 id="powertech-title">🏆 PowerTech 青少年科技創作競賽</h2>
             <p>PowerTech 是一項考驗學生機構設計、仿生機械與團隊解題能力的重量級賽事。</p>
             
+            <!-- YouTube 賽事介紹影片 (加入 nocookie 與跨域屬性，防範 Error 153) -->
+            <div class="video-container">
+                <iframe src="https://www.youtube-nocookie.com/embed/77PpF-nXuqQ?rel=0" 
+                        title="2025 iSTEAM--PowerTech青少年科技創作競賽 官方宣傳影片" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <!-- 無障礙備用外部連結 -->
+            <p style="text-align: right; margin-top: 5px; margin-bottom: 15px; font-size: 0.9em;">
+                <a href="https://www.youtube.com/watch?v=77PpF-nXuqQ" target="_blank" rel="noopener noreferrer" class="external-link">🔗 若影片無法正常載入，請點擊此處前往 YouTube 觀看 <span class="sr-only">(另開新視窗)</span></a>
+            </p>
+
             <div class="highlight-box">
                 <h3>巔峰榮耀 (2024-2025)</h3>
                 <ul class="achievement-list">
@@ -353,6 +441,27 @@
         <section id="mechanism" aria-labelledby="mechanism-title">
             <h2 id="mechanism-title">⚙️ 機關王大賽與 STEAM 積木創客</h2>
             <p>機關王大賽結合科學原理與積木創作，訓練孩子空間邏輯與物理機關的整合能力。</p>
+
+            <!-- YouTube 世界機關王紀錄影片 (加入 nocookie 與跨域屬性，防範 Error 153) -->
+            <div class="video-container">
+                <iframe src="https://www.youtube-nocookie.com/embed/f8j087sr4oI?rel=0" 
+                        title="[2025 WGM] 世界機關王-競賽紀錄影片" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <!-- 無障礙備用外部連結 -->
+            <p style="text-align: right; margin-top: 5px; margin-bottom: 15px; font-size: 0.9em;">
+                <a href="https://www.youtube.com/watch?v=f8j087sr4oI" target="_blank" rel="noopener noreferrer" class="external-link">🔗 若影片無法正常載入，請點擊此處前往 YouTube 觀看 <span class="sr-only">(另開新視窗)</span></a>
+            </p>
+
+            <div class="info-box">
+                ℹ️ <strong>想進一步了解賽事精神與歷屆精彩作品？</strong> 請參閱：<br>
+                <a href="https://www.worldgreenmech.com/tw/tw_index.asp" target="_blank" rel="noopener noreferrer" class="external-link">
+                    世界機關王大賽官方網站 <span class="sr-only">(另開新視窗)</span>
+                </a>
+            </div>
 
             <div class="highlight-box">
                 <h3>亮眼成績 (世界賽台灣代表與市賽冠軍)</h3>
@@ -429,7 +538,7 @@
                      onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://lin.ee/PqJItZg&margin=10';">
                 
                 <p style="margin-bottom: 1rem; font-weight: bold;">使用手機瀏覽？</p>
-                <a href="https://lin.ee/PqJItZg" class="btn-line" target="_blank" rel="noopener noreferrer" aria-label="點擊此連結加入參賽諮詢官方 LINE 帳號">
+                <a href="https://lin.ee/PqJItZg" class="btn-line" target="_blank" rel="noopener noreferrer" aria-label="點擊此連結加入參賽諮詢官方 LINE 帳號 (另開新視窗)">
                     點此加入 LINE 好友
                 </a>
             </div>
