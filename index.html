@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信義好玩團隊 - 學生競賽卓越榮譽榜</title>
+    <style>
+        /* CSS 變數定義，確保全站色彩對比度符合 WCAG 2.0 AA (至少 4.5:1) */
+        :root {
+            --primary-color: #004080; /* 深藍色，與白色背景對比度極佳 */
+            --secondary-color: #0059b3;
+            --accent-color: #d94a38; /* 深紅色，用於強調得獎 */
+            --background-light: #f4f7f6;
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --focus-outline: #ffaa00; /* 高對比焦點外框色 */
+        }
+
+        /* 基礎重置與排版 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "微軟正黑體", sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            font-size: 16px; /* 基礎字體大小，提升可讀性 */
+        }
+
+        /* -------------------------------------
+           WCAG 2.0 AA 無障礙設計專區 
+        -------------------------------------- */
+        /* 1. 隱藏式跳過導覽列，幫助鍵盤使用者快速跳至主內容 (2.4.1 區塊可跳過) */
+        .skip-link {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            background-color: var(--focus-outline);
+            color: #000000;
+            padding: 10px 15px;
+            font-weight: bold;
+            z-index: 9999;
+            transition: top 0.3s ease;
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            top: 0;
+            outline: 3px solid #000000; /* 強化焦點可見性 */
+        }
+
+        /* 2. 嚴格定義焦點狀態 (2.4.7 焦點可見) */
+        a:focus, button:focus, summary:focus, input:focus {
+            outline: 3px solid var(--focus-outline) !important;
+            outline-offset: 3px !important;
+            background-color: rgba(255, 170, 0, 0.1);
+        }
+
+        /* 結構樣式 */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid #dddddd;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        nav a:hover {
+            background-color: var(--background-light);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .highlight-box {
+            background-color: #fff9e6;
+            border-left: 5px solid #ffcc00;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .highlight-box h3 {
+            color: #b37700;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-list {
+            list-style-position: inside;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--secondary-color);
+        }
+
+        .badge-gold {
+            background-color: #d4af37;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .badge-silver {
+            background-color: #c0c0c0;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* 可折疊面板設計 (HTML5 details/summary) */
+        details {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            background-color: #fafafa;
+        }
+
+        summary {
+            font-weight: bold;
+            padding: 1rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            list-style: none; /* 隱藏預設箭頭以便自訂 */
+            position: relative;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: "➕ 展開查看";
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+
+        details[open] summary::before {
+            content: "➖ 收合內容";
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .details-content {
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+
+        footer {
+            background-color: #333333;
+            color: #ffffff;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .line-contact-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f9fff9;
+            border: 2px solid #00c300;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 195, 0, 0.1);
+        }
+
+        .line-contact-box img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-line {
+            display: inline-block;
+            background-color: #00c300;
+            color: #ffffff !important;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn-line:hover {
+            background-color: #00a000;
+        }
+
+        .btn-line:focus {
+            outline: 3px solid var(--focus-outline) !important;
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 區塊可跳過：協助螢幕閱讀器與鍵盤使用者直接跳至主內容 -->
+    <a href="#main-content" class="skip-link">跳至主要內容</a>
+
+    <!-- 標頭區塊 -->
+    <header role="banner">
+        <h1>新北市信義國小「信義好玩」團隊</h1>
+        <p>STEAM 教育與機器人競賽 卓越榮譽榜</p>
+    </header>
+
+    <!-- 導覽列區塊 -->
+    <nav role="navigation" aria-label="主要導覽">
+        <ul>
+            <li><a href="#intro">團隊介紹</a></li>
+            <li><a href="#powertech">PowerTech 科技創作</a></li>
+            <li><a href="#mechanism">機關王與 STEAM</a></li>
+            <li><a href="#ai-coding">AI 與程式機器人</a></li>
+            <li><a href="#matrix">Matrix 機器人</a></li>
+            <li><a href="#energy">能源小鐵人</a></li>
+        </ul>
+    </nav>
+
+    <!-- 主要內容區塊 -->
+    <main id="main-content" role="main">
+
+        <!-- 歡迎與簡介 -->
+        <section id="intro" aria-labelledby="intro-title">
+            <h2 id="intro-title">親愛的家長，您好！</h2>
+            <p>歡迎來到「信義好玩」團隊的專屬榮譽榜。多年來，我們的孩子在老師的指導下，參與了國內外各項重大的 STEAM（科學、科技、工程、藝術、數學）與機器人賽事。透過動手實作、程式邏輯撰寫與團隊合作，孩子們不僅累積了深厚的知識，更屢創佳績！</p>
+            <br>
+            <p>以下為您整理了團隊歷年來在各項重大賽事的閃耀時刻，讓我們一起為孩子的努力喝采！</p>
+        </section>
+
+        <!-- PowerTech 青少年科技創作競賽 -->
+        <section id="powertech" aria-labelledby="powertech-title">
+            <h2 id="powertech-title">🏆 PowerTech 青少年科技創作競賽</h2>
+            <p>PowerTech 是一項考驗學生機構設計、仿生機械與團隊解題能力的重量級賽事。</p>
+            
+            <div class="highlight-box">
+                <h3>巔峰榮耀 (2024-2025)</h3>
+                <ul class="achievement-list">
+                    <li><span class="badge-gold">2025 全國總冠軍</span> <strong>小學全能光控國中+國小 總積分冠軍</strong> (信義好玩-4)</li>
+                    <li><span class="badge-gold">2025 全國特優</span> 國小全能 (全能光控國中+國小) 小學積分獎 特優 (信義好玩-4)</li>
+                    <li><span class="badge-gold">2025 單項金牌</span> 小學滑翔落遠 金牌 (信義好玩-1)</li>
+                    <li><span class="badge-silver">2025 單項銀牌</span> 小學兩棲作戰 銀牌 (信義好玩-1)</li>
+                    <li><span class="badge-gold">2024 全國金牌</span> 單項 兩棲作戰 (信義好玩-1) & 單項 五分火車 (信義好玩-9)</li>
+                    <li><span class="badge-gold">2024 破紀錄獎</span> 國小組 螞蟻雄兵 (信義好玩-1)</li>
+                    <li><span class="badge-gold">2024 企業特別獎</span> 張榮發基金會特別獎 (五分火車、兩棲作戰) & 大眾教育基金會特別獎 (九彎十拐、滑翔落遠) <strong>皆榮獲第一名</strong></li>
+                </ul>
+            </div>
+
+            <details>
+                <summary>歷年新北市賽與全國賽詳細成績 (2018 - 2024)</summary>
+                <div class="details-content">
+                    <h4>2024 年</h4>
+                    <ul class="achievement-list">
+                        <li>新北市賽：小學全能賽光控組總積分【冠軍】、觸控組分項獎【銅牌】</li>
+                        <li>全國賽單項特優：光控九彎十拐、光控滑翔落遠、非觸控兩棲作戰、非觸控五分火車</li>
+                        <li>造型創意獎：榮獲多項「第一等第」（包含女力全能觸控、五分火車、兩棲作戰等）及「明維造型獎第一名」</li>
+                    </ul>
+                    <h4>2023 年</h4>
+                    <ul class="achievement-list">
+                        <li>全國賽：國小光控組九彎十拐冠軍、滑翔落遠亞軍、光控九彎十拐特優</li>
+                        <li>新北市賽：國小組四道競走銀牌（2隊）、銅牌（3隊）</li>
+                    </ul>
+                    <h4>2021 - 2022 年</h4>
+                    <ul class="achievement-list">
+                        <li>2022 全國賽：國小組《翻爬精靈》冠軍、季軍；《九彎十拐》亞軍；《滑翔落遠》亞軍</li>
+                        <li>2021 全國賽：國小新秀組總積分亞軍一隊、季軍一隊</li>
+                    </ul>
+                    <h4>2018 - 2020 年</h4>
+                    <ul class="achievement-list">
+                        <li>2020 新北市賽：國小組 造型創意Mini-Com 冠軍</li>
+                        <li>多次榮獲 Mini-com 積分獎、新秀積分獎與造型創意第一等第。</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- 機關王與 STEAM 競賽 -->
+        <section id="mechanism" aria-labelledby="mechanism-title">
+            <h2 id="mechanism-title">⚙️ 機關王大賽與 STEAM 積木創客</h2>
+            <p>機關王大賽結合科學原理與積木創作，訓練孩子空間邏輯與物理機關的整合能力。</p>
+
+            <div class="highlight-box">
+                <h3>亮眼成績 (世界賽台灣代表與市賽冠軍)</h3>
+                <ul class="achievement-list">
+                    <li><span class="badge-gold">2025 市賽冠軍</span> 智慧新北 STEAM 機關王大賽 - R4M 機器人任務賽 冠軍</li>
+                    <li><span class="badge-silver">2025 世界賽(台灣)</span> 2025 世界機關王大賽台灣暨世界賽 - R4M 機器人任務賽 銀獎</li>
+                    <li><span class="badge-gold">2024 市賽雙冠王</span> 智慧新北機關王大賽 - 程式小創客 冠軍 & 積木小創客 冠軍</li>
+                    <li><span class="badge-silver">2024 銅獎</span> 世界機關王大賽台灣賽 - R4M 機器人任務賽 銅獎</li>
+                </ul>
+            </div>
+
+            <details>
+                <summary>歷年機關王得獎紀錄 (2022 - 2025)</summary>
+                <div class="details-content">
+                    <ul class="achievement-list">
+                        <li><strong>2023 世界機關王大賽 (世界賽暨台灣賽):</strong> GM基礎組佳作一隊、程式小創客佳作四隊、積木小創客佳作三隊。</li>
+                        <li><strong>2023 智慧新北:</strong> 積木創客盃(GMJr.) 第三名。</li>
+                        <li><strong>2022 世界機關王大賽:</strong> GM-基礎組佳作二隊、科學小創客佳作一隊。</li>
+                        <li><strong>2022 智慧新北:</strong> 積木機關整合賽國小組佳作二隊。</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- AI 與程式設計 -->
+        <section id="ai-coding" aria-labelledby="ai-coding-title">
+            <h2 id="ai-coding-title">💻 智慧科技、AI 與程式設計機器人</h2>
+            <p>因應未來 AI 趨勢，團隊積極帶領孩子參與軟硬體結合的程式編寫與機器人挑戰。</p>
+
+            <ul class="achievement-list" style="margin-top: 1rem;">
+                <li><span class="badge-gold">第一名 (三隊)</span> <strong>114年度智慧科技素養與程式設計創新應用競賽</strong> - 2025輪型機器人程式路線挑戰賽</li>
+                <li><span class="badge-gold">第一名</span> <strong>2025年 AI START! 程式競賽</strong> - R4M 機器人任務賽 第一名 (另獲第二名一隊)</li>
+                <li><span class="badge-gold">第一名</span> <strong>2024年 AI START! 程式競賽</strong> - R4M 機器人任務賽 第一名</li>
+                <li><span class="badge-silver">第二名</span> <strong>2026年 AI START! 程式競賽</strong> - R4M 機器人任務賽 第二名 (另獲第三名一隊)</li>
+            </ul>
+        </section>
+
+        <!-- Matrix 機器人 -->
+        <section id="matrix" aria-labelledby="matrix-title">
+            <h2 id="matrix-title">🤖 Matrix 金屬機器人競賽</h2>
+            <p>透過 Matrix 金屬積木與控制系統，培養孩子進階的機械結構與機電整合能力，挑戰更高階的競技舞台。</p>
+            
+            <ul class="achievement-list" style="margin-top: 1rem;">
+                <li><span class="badge-silver">亞軍</span> <strong>2026 雙北盃 AiFRC</strong> - 全國高級中等學校季後 MARC 選拔賽 LOM 聯盟賽 亞軍聯盟 (一隊)</li>
+            </ul>
+        </section>
+
+        <!-- 能源小鐵人 -->
+        <section id="energy" aria-labelledby="energy-title">
+            <h2 id="energy-title">🌱 能源小鐵人競賽 (108年 - 114年)</h2>
+            <p>以綠能環保為主題，創作太陽能車與風力車，扎根永續教育。</p>
+            
+            <ul class="achievement-list" style="margin-top: 1rem;">
+                <li><strong>114年:</strong> 一般組佳作一隊、潛能組佳作一隊</li>
+                <li><strong>113年:</strong> 一般組佳作二隊</li>
+                <li><strong>112年:</strong> 一般組佳作一隊、潛能組佳作一隊</li>
+                <li><strong>111年:</strong> 一般組佳作一隊、潛能組佳作二隊</li>
+                <li><strong>110年:</strong> 一般組佳作</li>
+                <li><strong>109年:</strong> 北北基創意太陽能車 一般組佳作一隊、潛能組佳作二隊</li>
+                <li><strong>108年:</strong> 北北基創意風力車 一般組佳作一隊</li>
+            </ul>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">📩 聯絡我們 / 加入團隊</h2>
+            <p>如果您對信義好玩團隊的課程或培訓有興趣，歡迎透過我們的「參賽諮詢官方帳號」與我們聯繫，指導老師將會親自為您解答！</p>
+            
+            <div class="line-contact-box">
+                <h3 style="color: #007300; margin-bottom: 1rem;">加入 LINE 官方帳號</h3>
+                
+                <!-- 具備備援機制的圖片設計，確保無障礙與穩健性 (WCAG 1.1.1) -->
+                <img src="L_gainfriends_2dbarcodes_GW.png" 
+                     alt="信義好玩團隊 LINE 參賽諮詢官方帳號 QR Code，手機掃描即可加入"
+                     onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://lin.ee/PqJItZg&margin=10';">
+                
+                <p style="margin-bottom: 1rem; font-weight: bold;">使用手機瀏覽？</p>
+                <a href="https://lin.ee/PqJItZg" class="btn-line" target="_blank" rel="noopener noreferrer" aria-label="點擊此連結加入參賽諮詢官方 LINE 帳號">
+                    點此加入 LINE 好友
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾區塊 -->
+    <footer role="contentinfo">
+        <p>新北市板橋區信義國民小學 - 信義好玩團隊</p>
+        <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.8;">本網頁符合 WCAG 2.0 AA 無障礙網頁設計規範，保障所有家長的數位閱讀權益。</p>
+    </footer>
+
+</body>
+</html>
